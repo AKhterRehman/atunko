@@ -12,8 +12,10 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Inter', ...defaultTheme.fontFamily.sans],
-                serif: ['"Playfair Display"', ...defaultTheme.fontFamily.serif],
+                sans: ['Roboto', ...defaultTheme.fontFamily.sans],
+                serif: ['Montserrat', ...defaultTheme.fontFamily.sans],
+                heading: ['Montserrat', ...defaultTheme.fontFamily.sans],
+                body: ['Roboto', ...defaultTheme.fontFamily.sans],
             },
             colors: {
                 navy: {
