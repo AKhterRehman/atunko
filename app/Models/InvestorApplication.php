@@ -40,4 +40,9 @@ class InvestorApplication extends Model
     {
         return $this->hasMany(InvestorDocument::class);
     }
+
+    public function kycChecks()
+    {
+        return $this->hasMany(KycCheck::class);
+    }
 }

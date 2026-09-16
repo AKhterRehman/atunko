@@ -1,5 +1,14 @@
 <?php
 
+use App\Http\Controllers\Admin\ApplicationReviewController;
+use App\Http\Controllers\Admin\AuditLogController as AdminAuditLogController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\DocumentReviewController;
+use App\Http\Controllers\Admin\InvestorController as AdminInvestorController;
+use App\Http\Controllers\Admin\KycController;
+use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\SettingsController as AdminSettingsController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\Investor\ApplicationController;
 use App\Http\Controllers\Investor\DashboardController;
@@ -48,6 +57,34 @@ Route::middleware(['auth', 'verified'])->prefix('investor')->name('investor.')->
     Route::delete('/documents/{document}', [DocumentController::class, 'destroy'])->name('documents.destroy');
 
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+});
+
+// Admin / reviewer / compliance portal
+Route::middleware(['auth', 'verified', 'role:admin,reviewer,compliance'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('/investors', [AdminInvestorController::class, 'index'])->name('investors.index');
+    Route::get('/investors/{investor}', [AdminInvestorController::class, 'show'])->name('investors.show');
+
+    Route::post('/applications/{application}/assign', [ApplicationReviewController::class, 'assign'])->name('applications.assign');
+    Route::post('/applications/{application}/decide', [ApplicationReviewController::class, 'decide'])->name('applications.decide');
+
+    Route::get('/documents/{document}/download', [DocumentReviewController::class, 'download'])->name('documents.download');
+    Route::put('/documents/{document}', [DocumentReviewController::class, 'update'])->name('documents.update');
+
+    Route::put('/kyc-checks/{kycCheck}', [KycController::class, 'update'])->name('kyc-checks.update');
+
+    Route::get('/audit-log', [AdminAuditLogController::class, 'index'])->name('audit-log.index');
+
+    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+    Route::get('/reports/export/applications', [ReportController::class, 'exportApplications'])->name('reports.export.applications');
+
+    Route::middleware('role:admin')->group(function () {
+        Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');
+        Route::put('/users/{user}', [AdminUserController::class, 'update'])->name('users.update');
+
+        Route::get('/settings', [AdminSettingsController::class, 'index'])->name('settings.index');
+    });
 });
 
 Route::middleware('auth')->group(function () {

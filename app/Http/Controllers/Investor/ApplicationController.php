@@ -63,6 +63,10 @@ class ApplicationController extends Controller
             ]);
         }
 
+        foreach (['identity_verification', 'sanctions_pep_screening', 'address_verification', 'beneficial_owner_check'] as $checkType) {
+            $application->kycChecks()->create(['check_type' => $checkType]);
+        }
+
         AuditLog::record('application.submitted', $application);
 
         $user->notify(new ApplicationSubmitted());

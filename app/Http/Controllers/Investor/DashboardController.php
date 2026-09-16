@@ -8,9 +8,13 @@ use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
-    public function index(Request $request): View
+    public function index(Request $request): View|\Illuminate\Http\RedirectResponse
     {
         $user = $request->user();
+
+        if ($user->role !== 'investor') {
+            return redirect()->route('admin.dashboard');
+        }
         $application = $user->applications()->latest()->first();
 
         return view('investor.dashboard', [
