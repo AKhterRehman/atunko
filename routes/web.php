@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\DocumentReviewController;
 use App\Http\Controllers\Admin\InvestorController as AdminInvestorController;
 use App\Http\Controllers\Admin\KycController;
+use App\Http\Controllers\Admin\LeadController as AdminLeadController;
+use App\Http\Controllers\Admin\MessageController as AdminMessageController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\SettingsController as AdminSettingsController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
@@ -65,6 +67,12 @@ Route::middleware(['auth', 'verified', 'role:admin,reviewer,compliance'])->prefi
 
     Route::get('/investors', [AdminInvestorController::class, 'index'])->name('investors.index');
     Route::get('/investors/{investor}', [AdminInvestorController::class, 'show'])->name('investors.show');
+
+    Route::get('/leads', [AdminLeadController::class, 'index'])->name('leads.index');
+    Route::put('/leads/{lead}', [AdminLeadController::class, 'update'])->name('leads.update');
+
+    Route::get('/messages', [AdminMessageController::class, 'index'])->name('messages.index');
+    Route::put('/messages/{message}', [AdminMessageController::class, 'update'])->name('messages.update');
 
     Route::post('/applications/{application}/assign', [ApplicationReviewController::class, 'assign'])->name('applications.assign');
     Route::post('/applications/{application}/decide', [ApplicationReviewController::class, 'decide'])->name('applications.decide');

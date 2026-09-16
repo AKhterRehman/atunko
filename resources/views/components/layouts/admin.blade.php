@@ -24,6 +24,8 @@
                         $navItems = [
                             ['label' => 'Dashboard', 'route' => 'admin.dashboard'],
                             ['label' => 'Investor Directory', 'route' => 'admin.investors.index'],
+                            ['label' => 'Investor Leads', 'route' => 'admin.leads.index'],
+                            ['label' => 'Contact Messages', 'route' => 'admin.messages.index'],
                             ['label' => 'Audit Log', 'route' => 'admin.audit-log.index'],
                             ['label' => 'Reports', 'route' => 'admin.reports.index'],
                         ];
