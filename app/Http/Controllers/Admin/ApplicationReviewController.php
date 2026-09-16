@@ -15,17 +15,19 @@ class ApplicationReviewController extends Controller
     public function assign(Request $request, InvestorApplication $application): RedirectResponse
     {
         $validated = $request->validate([
-            'assigned_reviewer_id' => ['required', 'exists:users,id'],
+            'assigned_reviewer_id' => ['nullable', 'exists:users,id'],
         ]);
+
+        $reviewerId = $validated['assigned_reviewer_id'] ?? null;
 
         $application->update([
-            'assigned_reviewer_id' => $validated['assigned_reviewer_id'],
-            'status' => $application->status === 'submitted' ? 'under_review' : $application->status,
+            'assigned_reviewer_id' => $reviewerId,
+            'status' => $reviewerId && $application->status === 'submitted' ? 'under_review' : $application->status,
         ]);
 
-        AuditLog::record('application.assigned', $application, ['reviewer_id' => $validated['assigned_reviewer_id']]);
+        AuditLog::record($reviewerId ? 'application.assigned' : 'application.unassigned', $application, ['reviewer_id' => $reviewerId]);
 
-        return back()->with('status', 'Reviewer assigned.');
+        return back()->with('status', $reviewerId ? 'Reviewer assigned.' : 'Reviewer unassigned.');
     }
 
     public function decide(Request $request, InvestorApplication $application): RedirectResponse

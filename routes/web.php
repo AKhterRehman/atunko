@@ -40,7 +40,7 @@ Route::post('/investor-registration', [InvestorLeadController::class, 'store'])-
 // Investor portal (authenticated)
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware(['auth', 'verified'])->prefix('investor')->name('investor.')->group(function () {
+Route::middleware(['auth', 'verified', 'role:investor'])->prefix('investor')->name('investor.')->group(function () {
     Route::get('/profile', [ProfileOnboardingController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileOnboardingController::class, 'update'])->name('profile.update');
 

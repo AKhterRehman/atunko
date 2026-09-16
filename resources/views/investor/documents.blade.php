@@ -48,6 +48,9 @@ $statusColors = [
                                     {{ number_format($document->size_bytes / 1024, 0) }} KB &bull;
                                     <span class="font-semibold {{ $statusColors[$document->status] }}">{{ ucfirst($document->status) }}</span>
                                 </p>
+                                @if ($document->status === 'rejected' && $document->rejection_reason)
+                                    <p class="mt-1 text-xs text-red-600">Reason: {{ $document->rejection_reason }}</p>
+                                @endif
                             </div>
                             <div class="flex shrink-0 items-center gap-4">
                                 <a href="{{ route('investor.documents.download', $document) }}" class="text-xs font-semibold text-gold-600">Download</a>

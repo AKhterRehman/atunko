@@ -38,12 +38,26 @@ class ApplicationController extends Controller
                 ->with('status', 'Please complete your investor profile and investment preferences before submitting.');
         }
 
-        $validated = $request->validate([
-            'terms_consent' => ['accepted'],
-            'privacy_consent' => ['accepted'],
-        ]);
-
         $application = $user->applications()->latest()->first();
+        $isResubmission = $application->status === 'info_requested';
+
+        if (! $isResubmission) {
+            $request->validate([
+                'terms_consent' => ['accepted'],
+                'privacy_consent' => ['accepted'],
+            ]);
+
+            foreach (['terms_of_use', 'privacy_policy'] as $type) {
+                Consent::create([
+                    'user_id' => $user->id,
+                    'type' => $type,
+                    'version' => self::CONSENT_VERSION,
+                    'accepted_at' => now(),
+                    'ip_address' => $request->ip(),
+                ]);
+            }
+        }
+
         $application->update([
             'terms_consent' => true,
             'privacy_consent' => true,
@@ -53,21 +67,11 @@ class ApplicationController extends Controller
             'submitted_at' => now(),
         ]);
 
-        foreach (['terms_of_use', 'privacy_policy'] as $type) {
-            Consent::create([
-                'user_id' => $user->id,
-                'type' => $type,
-                'version' => self::CONSENT_VERSION,
-                'accepted_at' => now(),
-                'ip_address' => $request->ip(),
-            ]);
-        }
-
         foreach (['identity_verification', 'sanctions_pep_screening', 'address_verification', 'beneficial_owner_check'] as $checkType) {
-            $application->kycChecks()->create(['check_type' => $checkType]);
+            $application->kycChecks()->firstOrCreate(['check_type' => $checkType]);
         }
 
-        AuditLog::record('application.submitted', $application);
+        AuditLog::record($isResubmission ? 'application.resubmitted' : 'application.submitted', $application);
 
         $user->notify(new ApplicationSubmitted());
 

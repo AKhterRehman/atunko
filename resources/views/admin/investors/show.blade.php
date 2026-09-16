@@ -125,27 +125,38 @@ $preference = $investor->investmentPreference;
                 @else
                     <div class="mt-4 divide-y divide-navy-900/10">
                         @foreach ($investor->documents as $document)
-                            <div class="flex items-center justify-between gap-4 py-3">
-                                <div>
-                                    <p class="text-sm font-medium text-navy-900">{{ $document->original_name }}</p>
-                                    <p class="text-xs text-navy-900/50">
-                                        {{ $documentTypeLabels[$document->document_type] }} &bull;
-                                        <span class="font-semibold">{{ ucfirst($document->status) }}</span>
-                                        @if ($document->reviewedBy) &bull; by {{ $document->reviewedBy->name }} @endif
-                                    </p>
+                            <div x-data="{ rejecting: false }" class="py-3">
+                                <div class="flex items-center justify-between gap-4">
+                                    <div>
+                                        <p class="text-sm font-medium text-navy-900">{{ $document->original_name }}</p>
+                                        <p class="text-xs text-navy-900/50">
+                                            {{ $documentTypeLabels[$document->document_type] }} &bull;
+                                            <span class="font-semibold">{{ ucfirst($document->status) }}</span>
+                                            @if ($document->reviewedBy) &bull; by {{ $document->reviewedBy->name }} @endif
+                                        </p>
+                                        @if ($document->status === 'rejected' && $document->rejection_reason)
+                                            <p class="mt-1 text-xs text-red-600">Reason: {{ $document->rejection_reason }}</p>
+                                        @endif
+                                    </div>
+                                    <div class="flex shrink-0 items-center gap-2">
+                                        <a href="{{ route('admin.documents.download', $document) }}" class="rounded-sm border border-navy-900/15 px-3 py-1.5 text-xs font-semibold text-navy-900 hover:border-gold-500">Download</a>
+                                        <form method="POST" action="{{ route('admin.documents.update', $document) }}">
+                                            @csrf
+                                            @method('PUT')
+                                            <input type="hidden" name="status" value="verified">
+                                            <button type="submit" class="rounded-sm border border-green-600 px-3 py-1.5 text-xs font-semibold text-green-700 hover:bg-green-50">Verify</button>
+                                        </form>
+                                        <button type="button" @click="rejecting = !rejecting" class="rounded-sm border border-red-600 px-3 py-1.5 text-xs font-semibold text-red-700 hover:bg-red-50">Reject</button>
+                                    </div>
                                 </div>
-                                <div class="flex items-center gap-2">
-                                    <a href="{{ route('admin.documents.download', $document) }}" class="rounded-sm border border-navy-900/15 px-3 py-1.5 text-xs font-semibold text-navy-900 hover:border-gold-500">Download</a>
-                                    <form method="POST" action="{{ route('admin.documents.update', $document) }}" class="flex items-center gap-2"
-                                          onsubmit="if (this.status.value === 'rejected') { const reason = prompt('Rejection reason:'); if (!reason) return false; this.rejection_reason.value = reason; }">
-                                        @csrf
-                                        @method('PUT')
-                                        <input type="hidden" name="status">
-                                        <input type="hidden" name="rejection_reason">
-                                        <button type="submit" onclick="this.form.status.value='verified'" class="rounded-sm border border-green-600 px-3 py-1.5 text-xs font-semibold text-green-700 hover:bg-green-50">Verify</button>
-                                        <button type="submit" onclick="this.form.status.value='rejected'" class="rounded-sm border border-red-600 px-3 py-1.5 text-xs font-semibold text-red-700 hover:bg-red-50">Reject</button>
-                                    </form>
-                                </div>
+                                <form x-show="rejecting" x-cloak method="POST" action="{{ route('admin.documents.update', $document) }}" class="mt-3 flex items-center gap-2">
+                                    @csrf
+                                    @method('PUT')
+                                    <input type="hidden" name="status" value="rejected">
+                                    <input type="text" name="rejection_reason" placeholder="Rejection reason" required
+                                           class="flex-1 rounded-sm border border-navy-900/15 bg-white px-3 py-1.5 text-xs text-navy-900 focus:border-gold-500 focus:ring-gold-500">
+                                    <button type="submit" class="rounded-sm bg-red-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-red-500">Confirm Reject</button>
+                                </form>
                             </div>
                         @endforeach
                     </div>

@@ -23,7 +23,25 @@
             </div>
         </div>
 
-        @if ($application?->status !== 'draft')
+        @if ($application?->status === 'info_requested')
+            <div class="mt-8 rounded-sm border border-gold-500/40 bg-gold-500/10 px-4 py-3 text-sm text-gold-700">
+                Our team has requested additional information before your application can proceed.
+                @if ($application->reviewer_notes)
+                    <p class="mt-2"><strong>Note from our team:</strong> {{ $application->reviewer_notes }}</p>
+                @endif
+                <p class="mt-2">
+                    Please <a href="{{ route('investor.documents.index') }}" class="underline">upload any requested documents</a>,
+                    update your <a href="{{ route('investor.profile.edit') }}" class="underline">profile</a> or
+                    <a href="{{ route('investor.preferences.edit') }}" class="underline">preferences</a> if needed, then resubmit below.
+                </p>
+            </div>
+            <form method="POST" action="{{ route('investor.application.submit') }}" class="mt-6 space-y-6 border-t border-navy-900/10 pt-6">
+                @csrf
+                <button type="submit" class="rounded-sm bg-gold-500 px-6 py-3 text-sm font-semibold text-navy-950 transition hover:bg-gold-400">
+                    Resubmit application
+                </button>
+            </form>
+        @elseif ($application?->status !== 'draft')
             <div class="mt-8 rounded-sm border border-gold-500/40 bg-gold-500/10 px-4 py-3 text-sm text-gold-700">
                 Your application was submitted on {{ $application->submitted_at?->format('d M Y') }} and is currently
                 <strong>{{ str($application->status)->replace('_', ' ')->title() }}</strong>.
