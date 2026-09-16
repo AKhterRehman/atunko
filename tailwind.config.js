@@ -12,7 +12,28 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['Inter', ...defaultTheme.fontFamily.sans],
+                serif: ['"Playfair Display"', ...defaultTheme.fontFamily.serif],
+            },
+            colors: {
+                navy: {
+                    950: '#070f1e',
+                    900: '#0a1628',
+                    800: '#0f2138',
+                    700: '#16304f',
+                    600: '#1d3f66',
+                },
+                gold: {
+                    400: '#e0c58a',
+                    500: '#c9a15a',
+                    600: '#b48d45',
+                    700: '#8f6e34',
+                },
+                cream: {
+                    50: '#fdfcf9',
+                    100: '#f7f3ea',
+                    200: '#efe8d8',
+                },
             },
         },
     },
