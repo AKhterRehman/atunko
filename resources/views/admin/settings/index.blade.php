@@ -14,7 +14,7 @@
     <x-site.card class="mt-6" title="Important Launch Conditions">
         <ul class="mt-4 space-y-2 text-sm text-navy-900/70">
             <li>&bull; Legal and compliance counsel must confirm jurisdictional KYC/AML, eligibility and disclosure requirements before production use.</li>
-            <li>&bull; A real KYC/AML provider must be integrated before accepting live investor capital.</li>
+            <li>&bull; KYC/AML is a custom manual review by staff — ensure reviewer training and escalation procedures are documented before production use.</li>
             <li>&bull; Backups, monitoring and penetration testing must be configured before production deployment.</li>
         </ul>
     </x-site.card>

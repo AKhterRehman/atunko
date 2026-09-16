@@ -27,7 +27,7 @@
 
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
                 <x-form.input label="Nationality" name="nationality" required :value="$profile->nationality" />
-                <x-form.input label="Date of Birth" name="date_of_birth" type="date" required :value="$profile->date_of_birth?->format('Y-m-d')" />
+                <x-form.input label="Date of Birth" name="date_of_birth" type="date" required :value="$profile->date_of_birth" />
             </div>
 
             <x-form.input label="Address Line 1" name="address_line_1" required :value="$profile->address_line_1" />

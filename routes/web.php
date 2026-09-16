@@ -32,10 +32,10 @@ Route::view('/risk-disclosure', 'pages.risk-disclosure')->name('risk-disclosure'
 Route::view('/investor-eligibility', 'pages.eligibility')->name('eligibility');
 
 Route::get('/contact', [ContactMessageController::class, 'create'])->name('contact');
-Route::post('/contact', [ContactMessageController::class, 'store'])->name('contact.store');
+Route::post('/contact', [ContactMessageController::class, 'store'])->middleware('throttle:5,1')->name('contact.store');
 
 Route::get('/investor-registration', [InvestorLeadController::class, 'create'])->name('register-interest');
-Route::post('/investor-registration', [InvestorLeadController::class, 'store'])->name('register-interest.store');
+Route::post('/investor-registration', [InvestorLeadController::class, 'store'])->middleware('throttle:5,1')->name('register-interest.store');
 
 // Investor portal (authenticated)
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
@@ -52,7 +52,7 @@ Route::middleware(['auth', 'verified'])->prefix('investor')->name('investor.')->
     Route::get('/application/status', [ApplicationController::class, 'status'])->name('status');
 
     Route::get('/documents', [DocumentController::class, 'index'])->name('documents.index');
-    Route::post('/documents', [DocumentController::class, 'store'])->name('documents.store');
+    Route::post('/documents', [DocumentController::class, 'store'])->middleware('throttle:10,1')->name('documents.store');
     Route::get('/documents/{document}/download', [DocumentController::class, 'download'])->name('documents.download');
     Route::delete('/documents/{document}', [DocumentController::class, 'destroy'])->name('documents.destroy');
 

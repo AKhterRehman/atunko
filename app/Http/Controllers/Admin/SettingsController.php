@@ -16,7 +16,7 @@ class SettingsController extends Controller
                 'Mail driver' => config('mail.default'),
                 'Filesystem disk (documents)' => 'local (private, non-public)',
                 'Consent version' => \App\Http\Controllers\Investor\ApplicationController::CONSENT_VERSION,
-                'KYC/AML provider' => 'Not yet integrated — manual review only. Configure a provider before production use.',
+                'KYC/AML process' => 'Custom manual review by staff — no third-party verification provider.',
             ],
         ]);
     }

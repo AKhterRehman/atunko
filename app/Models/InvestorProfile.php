@@ -26,7 +26,11 @@ class InvestorProfile extends Model
     ];
 
     protected $casts = [
-        'date_of_birth' => 'date',
+        'date_of_birth' => 'encrypted',
+        'source_of_funds' => 'encrypted',
+        'address_line_1' => 'encrypted',
+        'address_line_2' => 'encrypted',
+        'registration_number' => 'encrypted',
         'eligibility_confirmed' => 'boolean',
         'profile_completed_at' => 'datetime',
     ];
