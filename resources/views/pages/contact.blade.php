@@ -1,6 +1,6 @@
 <x-layouts.public :title="'Contact'">
 
-    <x-site.page-header eyebrow="Get In Touch" title="Contact ATUNKO Partnership"
+    <x-site.page-header eyebrow="Get In Touch" title="Contact ATUNKO"
         description="For investor enquiries, partnership proposals or general questions, reach out and our team will respond promptly." />
 
     <section class="bg-cream-50 px-6 py-24 lg:px-8">

@@ -44,7 +44,7 @@ $legal = [
         </div>
 
         <div class="mt-12 border-t border-white/10 pt-8 text-xs leading-relaxed text-white/50">
-            <p>&copy; {{ now()->year }} ATUNKO PARTNERSHIP. All rights reserved.</p>
+            <p>&copy; {{ now()->year }} ATUNKO. All rights reserved.</p>
             <p class="mt-2">Investment opportunities involve risk. Target returns are objectives and are not guaranteed. Seek independent professional advice.</p>
         </div>
     </div>

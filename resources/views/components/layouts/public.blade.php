@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ $title ?? 'ATUNKO Partnership' }} | Rewriting Destinies, Rebuilding Lives</title>
-    <meta name="description" content="{{ $description ?? 'ATUNKO Partnership connects disciplined global capital with commercially viable opportunities that create measurable economic and social value across Africa.' }}">
+    <title>{{ $title ?? 'ATUNKO' }} | Rewriting Destinies, Rebuilding Lives</title>
+    <meta name="description" content="{{ $description ?? 'ATUNKO connects disciplined global capital with commercially viable opportunities that create measurable economic and social value across Africa.' }}">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>[x-cloak] { display: none !important; }</style>

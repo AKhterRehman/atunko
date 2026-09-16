@@ -1,7 +1,7 @@
 <x-layouts.public :title="'About ATUNKO'">
 
     <x-site.page-header eyebrow="About ATUNKO" title="A partnership built on purpose and discipline."
-        description="ATUNKO Partnership exists to connect disciplined global capital with commercially viable opportunities that create measurable economic and social value across Africa." />
+        description="ATUNKO exists to connect disciplined global capital with commercially viable opportunities that create measurable economic and social value across Africa." />
 
     <section class="bg-cream-50 px-6 py-24 lg:px-8">
         <div class="mx-auto grid max-w-6xl gap-16 lg:grid-cols-2">

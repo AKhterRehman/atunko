@@ -62,7 +62,7 @@
             </p>
 
             <div class="mt-14 grid grid-cols-1 gap-x-8 lg:grid-cols-5">
-                <x-site.sector-card number="01" title="Sports &amp; Education"
+                <x-site.sector-card number="01" title="Sports & Education"
                     description="The John Chamberlain Sports Institute: developing elite talent, education and human capital." />
                 <x-site.sector-card number="02" title="Renewable Energy"
                     description="Utility-scale solar and clean generation powering businesses, communities and resilient growth." />

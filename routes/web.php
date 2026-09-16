@@ -1,6 +1,12 @@
 <?php
 
 use App\Http\Controllers\ContactMessageController;
+use App\Http\Controllers\Investor\ApplicationController;
+use App\Http\Controllers\Investor\DashboardController;
+use App\Http\Controllers\Investor\DocumentController;
+use App\Http\Controllers\Investor\NotificationController;
+use App\Http\Controllers\Investor\PreferenceController;
+use App\Http\Controllers\Investor\ProfileOnboardingController;
 use App\Http\Controllers\InvestorLeadController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -23,9 +29,26 @@ Route::get('/investor-registration', [InvestorLeadController::class, 'create'])-
 Route::post('/investor-registration', [InvestorLeadController::class, 'store'])->name('register-interest.store');
 
 // Investor portal (authenticated)
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware(['auth', 'verified'])->prefix('investor')->name('investor.')->group(function () {
+    Route::get('/profile', [ProfileOnboardingController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [ProfileOnboardingController::class, 'update'])->name('profile.update');
+
+    Route::get('/preferences', [PreferenceController::class, 'edit'])->name('preferences.edit');
+    Route::put('/preferences', [PreferenceController::class, 'update'])->name('preferences.update');
+
+    Route::get('/application', [ApplicationController::class, 'edit'])->name('application.edit');
+    Route::post('/application/submit', [ApplicationController::class, 'submit'])->name('application.submit');
+    Route::get('/application/status', [ApplicationController::class, 'status'])->name('status');
+
+    Route::get('/documents', [DocumentController::class, 'index'])->name('documents.index');
+    Route::post('/documents', [DocumentController::class, 'store'])->name('documents.store');
+    Route::get('/documents/{document}/download', [DocumentController::class, 'download'])->name('documents.download');
+    Route::delete('/documents/{document}', [DocumentController::class, 'destroy'])->name('documents.destroy');
+
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

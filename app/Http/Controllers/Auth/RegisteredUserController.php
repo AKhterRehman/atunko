@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\AuditLog;
+use App\Models\InvestorApplication;
+use App\Models\InvestorProfile;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -41,6 +44,10 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+
+        InvestorProfile::create(['user_id' => $user->id]);
+        InvestorApplication::create(['user_id' => $user->id]);
+        AuditLog::record('account.registered', $user);
 
         event(new Registered($user));
 

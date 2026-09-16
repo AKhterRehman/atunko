@@ -1,6 +1,6 @@
 @php
 $faqs = [
-    ['q' => 'What is ATUNKO Partnership?', 'a' => 'ATUNKO is an investment partnership connecting disciplined global capital with commercially viable opportunities across five priority sectors in Africa, aiming to create measurable economic and social value alongside financial returns.'],
+    ['q' => 'What is ATUNKO?', 'a' => 'ATUNKO is an investment partnership connecting disciplined global capital with commercially viable opportunities across five priority sectors in Africa, aiming to create measurable economic and social value alongside financial returns.'],
     ['q' => 'Who can register as an investor?', 'a' => 'Individual investors, family offices, institutions and strategic partners can register their interest. Final eligibility is confirmed during onboarding, subject to KYC/AML and jurisdictional requirements.'],
     ['q' => 'Does registering interest guarantee an investment allocation?', 'a' => 'No. Submitting the investor registration form does not constitute an offer, commitment or investment application. It initiates a confidential conversation with our team.'],
     ['q' => 'What sectors does ATUNKO invest in?', 'a' => 'Sports & Education, Renewable Energy, Real Estate, Agriculture and Fintech — five sectors selected for strong commercial fundamentals and complementary economic effects.'],
